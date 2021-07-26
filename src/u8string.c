@@ -44,20 +44,32 @@ u8str_get_utf8char_len (char *chptr)
   return 1;
 }
 
+static size_t
+u8str_get_cstrlen (u8string_t *string)
+{
+  size_t i = 0;
+  size_t len = 0;
+  
+  for (i = 0; i < string->length; ++i)
+    len += strlen(string->string[i]);
+
+  return len;
+}
+
 static void
-u8str_copy_cstring_to_u8string (u8string_t tdlstr, char *cstr)
+u8str_copy_cstring_to_u8string (u8string_t *tdlstr, char *cstr)
 {
   size_t i = 0;
   size_t j = 0;
   size_t k = 0;
   size_t len = strlen (cstr);
 
-  memset (tdlstr.string, 0, sizeof (u8char_t) * tdlstr.length);
+  memset (tdlstr->string, 0, sizeof (u8char_t) * tdlstr->length);
   
   for (i = 0; i < len; i += k)
     {
       k = u8str_get_utf8char_len (cstr + i);
-      memcpy (tdlstr.string[j++], cstr + i, k);
+      memcpy (tdlstr->string[j++], cstr + i, k);
     }
 }
 
@@ -81,7 +93,7 @@ u8string (char *string)
   ret.length += u8str_strlen (string);
   ret.string = malloc (ret.length * sizeof (u8char_t));
 
-  u8str_copy_cstring_to_u8string (ret, string);
+  u8str_copy_cstring_to_u8string (&ret, string);
 
   return ret;
 }
@@ -97,19 +109,42 @@ u8string_free (u8string_t *str)
   return EXIT_SUCCESS;
 }
 
+char *
+u8string_to_cstr (u8string_t *string)
+{
+  char *ptr = NULL;
+  char *ret = NULL;
+  size_t i = 0;
+  size_t u8charlen = 0;
+  
+  if (string == NULL)
+    return NULL;
+
+  ret = ptr = calloc (u8str_get_cstrlen (string) + 1, sizeof (char));
+  
+  for (i = 0; i < string->length; ++i)
+    {
+      u8charlen = strlen (string->string[i]);
+      memcpy (ptr, string->string[i], u8charlen);
+      ptr += u8charlen;
+    }
+
+  return ret;
+}
+
 u8string_t
 u8string_set (u8string_t *string, char *newstr)
 {
   size_t newsize = u8str_strlen (newstr);
 
   if (newsize <= string->length)
-    u8str_copy_cstring_to_u8string (*string, newstr);
+    u8str_copy_cstring_to_u8string (string, newstr);
   else
     {
       string->string = realloc (string->string, newsize * sizeof (u8char_t));
       string->length = newsize;
 
-      u8str_copy_cstring_to_u8string (*string, newstr);
+      u8str_copy_cstring_to_u8string (string, newstr);
     }
   return *string;
 }

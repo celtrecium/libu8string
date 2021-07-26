@@ -39,7 +39,7 @@
 # define U8STR_API
 #endif /* _WIN32 || __CYGWIN__ */
 
-typedef char u8char_t[4];
+typedef char u8char_t[5];
 
 typedef struct u8string
 {
@@ -51,5 +51,6 @@ U8STR_API size_t u8str_strlen (char *string);
 U8STR_API u8string_t u8string (char *string);
 U8STR_API int u8string_free (u8string_t *str);
 U8STR_API u8string_t u8string_set (u8string_t *string, char *newstr);
+U8STR_API char * u8string_to_cstr (u8string_t *string);
 
 #endif  /* U8STRING_H */
