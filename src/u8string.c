@@ -17,7 +17,6 @@
  */
 
 #include "u8string.h"
-#include <stdlib.h>
 #include <string.h>
 
 #define UTF8_CODEPOINT_4B 0xF0
@@ -58,19 +57,19 @@ u8str_get_cstrlen (u8string_t *string)
 }
 
 static void
-u8str_copy_cstring_to_u8string (u8string_t *tdlstr, char *cstr)
+u8str_copy_cstring_to_u8string (u8string_t *str, char *cstr)
 {
   size_t i = 0;
   size_t j = 0;
   size_t k = 0;
   size_t len = strlen (cstr);
 
-  memset (tdlstr->string, 0, sizeof (u8char_t) * tdlstr->length);
+  memset (str->string, 0, sizeof (u8char_t) * str->length);
   
   for (i = 0; i < len; i += k)
     {
       k = u8str_get_utf8char_len (cstr + i);
-      memcpy (tdlstr->string[j++], cstr + i, k);
+      memcpy (str->string[j++], cstr + i, k);
     }
 }
 
@@ -102,10 +101,11 @@ u8string (char *string)
 int
 u8string_free (u8string_t *str)
 {
+  if (str == NULL)
+    return EXIT_FAILURE;
+  
   free (str->string);
-
-  str->string = NULL;
-  str->length = 0;
+  free (str);
 
   return EXIT_SUCCESS;
 }
@@ -133,11 +133,14 @@ u8string_to_cstr (u8string_t *string)
   return ret;
 }
 
-u8string_t
+u8string_t *
 u8string_set (u8string_t *string, char *newstr)
 {
   size_t newsize = u8str_strlen (newstr);
 
+  if (string == NULL)
+    return NULL;
+  
   if (newsize <= string->length)
     {
     if (newsize <= string->length / 2)
@@ -159,5 +162,5 @@ u8string_set (u8string_t *string, char *newstr)
       string->length = newsize;
       u8str_copy_cstring_to_u8string (string, newstr);
     }
-  return *string;
+  return string;
 }
