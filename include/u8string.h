@@ -48,7 +48,7 @@ typedef struct u8string
 } u8string_t;
 
 U8STR_API size_t u8str_strlen (char *string);
-U8STR_API u8string_t u8string (char *string);
+U8STR_API u8string_t *u8string (char *string);
 U8STR_API int u8string_free (u8string_t *str);
 U8STR_API u8string_t u8string_set (u8string_t *string, char *newstr);
 U8STR_API char * u8string_to_cstr (u8string_t *string);

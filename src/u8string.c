@@ -17,6 +17,7 @@
  */
 
 #include "u8string.h"
+#include <stdlib.h>
 #include <string.h>
 
 #define UTF8_CODEPOINT_4B 0xF0
@@ -85,15 +86,15 @@ u8str_strlen (char *string)
   return length;
 }
 
-u8string_t
+u8string_t *
 u8string (char *string)
 {
-  u8string_t ret = {NULL, 0};
-  
-  ret.length += u8str_strlen (string);
-  ret.string = malloc (ret.length * sizeof (u8char_t));
+  u8string_t *ret = calloc (1, sizeof (u8string_t));
 
-  u8str_copy_cstring_to_u8string (&ret, string);
+  ret->length += u8str_strlen (string);
+  ret->string = malloc (ret->length * sizeof (u8char_t));
+
+  u8str_copy_cstring_to_u8string (ret, string);
 
   return ret;
 }
