@@ -138,12 +138,24 @@ u8string_set (u8string_t *string, char *newstr)
   size_t newsize = u8str_strlen (newstr);
 
   if (newsize <= string->length)
-    u8str_copy_cstring_to_u8string (string, newstr);
+    {
+    if (newsize <= string->length / 2)
+      {
+        string->string = realloc(string->string, (newsize + 1) *
+                                 sizeof (u8char_t));
+
+        string->length = newsize;
+        u8str_copy_cstring_to_u8string (string, newstr);
+      }
+    else
+      u8str_copy_cstring_to_u8string (string, newstr);
+    }
   else
     {
-      string->string = realloc (string->string, newsize * sizeof (u8char_t));
-      string->length = newsize;
+      string->string = realloc (string->string, (newsize + 1) *
+                                sizeof (u8char_t));
 
+      string->length = newsize;
       u8str_copy_cstring_to_u8string (string, newstr);
     }
   return *string;
