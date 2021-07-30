@@ -38,8 +38,6 @@ u8str_get_utf8char_len (char *chptr)
   for (i = 0; i < 3; ++i)
     if ((cpoint_len[i][0] & *chptr) == cpoint_len[i][0])
       return (size_t) cpoint_len[i][1];  
-    else if (i == 2)
-      return 1;
 
   return 1;
 }
