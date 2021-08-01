@@ -183,7 +183,7 @@ u8char_compare (u8char_t first, u8char_t second)
   else if (first == NULL || second == NULL)
     return false;
 
-  if (strncmp (first, second, U8CHAR_LEN) == 0)
+  if (strcmp (first, second) == 0)
     return true;
   else
     return false;
