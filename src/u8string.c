@@ -174,3 +174,17 @@ u8char_copy (u8char_t dest, u8char_t src)
 
   return EXIT_SUCCESS;
 }
+
+bool
+u8char_compare (u8char_t first, u8char_t second)
+{
+  if (first == NULL && second == NULL)
+    return true;
+  else if (first == NULL || second == NULL)
+    return false;
+
+  if (strncmp (first, second, U8CHAR_LEN) == 0)
+    return true;
+  else
+    return false;
+}

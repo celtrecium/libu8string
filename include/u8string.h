@@ -20,6 +20,7 @@
 #define U8STRING_H
 
 #include <stdlib.h>
+#include <stdbool.h>
 
 #if defined(_WIN32) || defined(__CYGWIN__)
 # if defined(_MSC_VER)
@@ -55,5 +56,6 @@ U8STR_API int u8string_free (u8string_t *str);
 U8STR_API u8string_t *u8string_set (u8string_t *string, char *newstr);
 U8STR_API char *u8string_to_cstr (u8string_t *string);
 U8STR_API int u8char_copy (u8char_t dest, u8char_t src);
+U8STR_API bool u8char_compare (u8char_t first, u8char_t second);
 
 #endif  /* U8STRING_H */
