@@ -176,7 +176,7 @@ u8char_copy (u8char_t dest, u8char_t src)
 }
 
 bool
-u8char_compare (u8char_t first, u8char_t second)
+u8char_compare (void *first, void *second)
 {
   if (first == NULL && second == NULL)
     return true;
