@@ -178,13 +178,8 @@ u8char_copy (u8char_t dest, u8char_t src)
 bool
 u8char_compare (void *first, void *second)
 {
-  if (first == NULL && second == NULL)
-    return true;
-  else if (first == NULL || second == NULL)
-    return false;
+  if (first == NULL || second == NULL)
+    return first == second;
 
-  if (strcmp (first, second) == 0)
-    return true;
-  else
-    return false;
+  return strcmp (first, second) == 0;
 }
