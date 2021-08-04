@@ -43,6 +43,7 @@
 #define U8CHAR_LEN 5
 
 typedef char u8char_t[U8CHAR_LEN];
+typedef char* cstr;
 
 typedef struct u8string
 {
@@ -50,10 +51,10 @@ typedef struct u8string
   size_t length;
 } u8string_t;
 
-U8STR_API size_t u8str_strlen (char *string);
-U8STR_API u8string_t *u8string (char *string);
+U8STR_API size_t u8str_strlen (cstr string);
+U8STR_API u8string_t *u8string (cstr string);
 U8STR_API int u8string_free (u8string_t *str);
-U8STR_API u8string_t *u8string_set (u8string_t *string, char *newstr);
+U8STR_API u8string_t *u8string_set (u8string_t *string, cstr newstr);
 U8STR_API char *u8string_to_cstr (u8string_t *string);
 U8STR_API int u8char_copy (u8char_t dest, u8char_t src);
 U8STR_API bool u8char_compare (void *first, void *second);

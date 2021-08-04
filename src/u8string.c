@@ -16,7 +16,7 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#include "u8string.h"
+#include "../include/u8string.h"
 #include <stdlib.h>
 #include <string.h>
 
@@ -56,24 +56,24 @@ u8str_get_cstrlen (u8string_t *string)
 }
 
 static void
-u8str_copy_cstring_to_u8string (u8string_t *str, char *cstr)
+u8str_copy_cstring_to_u8string (u8string_t *str, cstr cstring)
 {
   size_t i = 0;
   size_t j = 0;
   size_t k = 0;
-  size_t len = strlen (cstr);
+  size_t len = strlen (cstring);
 
   memset (str->string, 0, sizeof (u8char_t) * str->length);
   
   for (i = 0; i < len; i += k)
     {
-      k = u8str_get_utf8char_len (cstr + i);
-      memcpy (str->string[j++], cstr + i, k);
+      k = u8str_get_utf8char_len (cstring + i);
+      memcpy (str->string[j++], cstring + i, k);
     }
 }
 
 size_t
-u8str_strlen (char *string)
+u8str_strlen (cstr string)
 {
   size_t length = 0;
   size_t i = 0;
@@ -85,7 +85,7 @@ u8str_strlen (char *string)
 }
 
 u8string_t *
-u8string (char *string)
+u8string (cstr string)
 {
   u8string_t *ret = calloc (1, sizeof (u8string_t));
 
@@ -133,7 +133,7 @@ u8string_to_cstr (u8string_t *string)
 }
 
 u8string_t *
-u8string_set (u8string_t *string, char *newstr)
+u8string_set (u8string_t *string, cstr newstr)
 {
   size_t newsize = u8str_strlen (newstr);
 
