@@ -16,7 +16,7 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#include "../include/u8string.h"
+#include "u8string.h"
 #include <stdlib.h>
 #include <string.h>
 
@@ -97,16 +97,16 @@ u8string (cstr string)
   return ret;
 }
 
-int
+bool
 u8string_free (u8string_t *str)
 {
   if (str == NULL)
-    return EXIT_FAILURE;
+    return false;
   
   free (str->string);
   free (str);
 
-  return EXIT_SUCCESS;
+  return true;
 }
 
 char *
@@ -164,15 +164,15 @@ u8string_set (u8string_t *string, cstr newstr)
   return string;
 }
 
-int
+bool
 u8char_copy (u8char_t dest, u8char_t src)
 {
   if (dest == NULL || src == NULL)
-    return EXIT_FAILURE;
+    return false;
 
   memcpy (dest, src, U8CHAR_LEN);
 
-  return EXIT_SUCCESS;
+  return true;
 }
 
 bool
