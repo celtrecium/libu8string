@@ -90,7 +90,7 @@ u8string (cstr string)
   u8string_t *ret = calloc (1, sizeof (u8string_t));
 
   ret->length += u8str_strlen (string);
-  ret->string = malloc (ret->length * sizeof (u8char_t));
+  ret->string = calloc (ret->length, sizeof (u8char_t));
 
   u8str_copy_cstring_to_u8string (ret, string);
 
