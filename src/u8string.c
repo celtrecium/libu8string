@@ -84,15 +84,15 @@ u8str_strlen (cstr string)
   return length;
 }
 
-u8string_t *
+u8string_t
 u8string (cstr string)
 {
-  u8string_t *ret = calloc (1, sizeof (u8string_t));
+  u8string_t ret; 
 
-  ret->length += u8str_strlen (string);
-  ret->string = calloc (ret->length, sizeof (u8char_t));
+  ret.length = u8str_strlen (string);
+  ret.string = calloc (ret.length, sizeof (u8char_t));
 
-  u8str_copy_cstring_to_u8string (ret, string);
+  u8str_copy_cstring_to_u8string (&ret, string);
 
   return ret;
 }
@@ -100,11 +100,11 @@ u8string (cstr string)
 bool
 u8string_free (u8string_t *str)
 {
-  if (str == NULL)
+  if (!str)
     return false;
   
   free (str->string);
-  free (str);
+  str->length = 0;
 
   return true;
 }
@@ -117,7 +117,7 @@ u8string_to_cstr (u8string_t *string)
   size_t i = 0;
   size_t u8charlen = 0;
   
-  if (string == NULL)
+  if (!string)
     return NULL;
 
   ret = ptr = calloc (u8str_get_cstrlen (string) + 1, sizeof (char));
@@ -137,7 +137,7 @@ u8string_set (u8string_t *string, cstr newstr)
 {
   size_t newsize = u8str_strlen (newstr);
 
-  if (string == NULL)
+  if (!string)
     return NULL;
   
   if (newsize <= string->length)
@@ -161,13 +161,14 @@ u8string_set (u8string_t *string, cstr newstr)
       string->length = newsize;
       u8str_copy_cstring_to_u8string (string, newstr);
     }
+  
   return string;
 }
 
 bool
 u8char_copy (u8char_t dest, u8char_t src)
 {
-  if (dest == NULL || src == NULL)
+  if (!dest || !src)
     return false;
 
   memcpy (dest, src, U8CHAR_LEN);
@@ -178,8 +179,8 @@ u8char_copy (u8char_t dest, u8char_t src)
 bool
 u8char_compare (void *first, void *second)
 {
-  if (first == NULL || second == NULL)
+  if (!first || !second)
     return first == second;
 
-  return strcmp (first, second) == 0;
+  return !strcmp (first, second);
 }
