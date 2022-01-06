@@ -16,7 +16,7 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#include "u8string.h"
+#include "../include/u8string.h"
 #include <stdlib.h>
 #include <string.h>
 
@@ -32,7 +32,7 @@ static const int cpoint_len[3][2] =
   };
 
 static size_t
-u8str_get_utf8char_len (char *chptr)
+u8str_get_utf8char_len (const char *chptr)
 {
   size_t i = 0;
   
@@ -44,7 +44,7 @@ u8str_get_utf8char_len (char *chptr)
 }
 
 static size_t
-u8str_get_cstrlen (u8string_t *string)
+u8str_get_cstrlen (const u8string_t *string)
 {
   size_t i = 0;
   size_t len = 0;
@@ -56,7 +56,7 @@ u8str_get_cstrlen (u8string_t *string)
 }
 
 static void
-u8str_copy_cstring_to_u8string (u8string_t *str, cstr cstring)
+u8str_copy_cstring_to_u8string (u8string_t *str, const cstr cstring)
 {
   size_t i = 0;
   size_t j = 0;
@@ -73,7 +73,7 @@ u8str_copy_cstring_to_u8string (u8string_t *str, cstr cstring)
 }
 
 size_t
-u8str_strlen (cstr string)
+u8str_strlen (const cstr string)
 {
   size_t length = 0;
   size_t i = 0;
@@ -85,7 +85,7 @@ u8str_strlen (cstr string)
 }
 
 u8string_t
-u8string (cstr string)
+u8string (const cstr string)
 {
   u8string_t ret; 
 
@@ -133,7 +133,7 @@ u8string_to_cstr (u8string_t *string)
 }
 
 u8string_t *
-u8string_set (u8string_t *string, cstr newstr)
+u8string_set (u8string_t *string, const cstr newstr)
 {
   size_t newsize = u8str_strlen (newstr);
 
@@ -166,7 +166,7 @@ u8string_set (u8string_t *string, cstr newstr)
 }
 
 bool
-u8char_copy (u8char_t dest, u8char_t src)
+u8char_copy (u8char_t dest, const u8char_t src)
 {
   if (!dest || !src)
     return false;
@@ -177,7 +177,7 @@ u8char_copy (u8char_t dest, u8char_t src)
 }
 
 bool
-u8char_compare (void *first, void *second)
+u8char_compare (const void *first, const void *second)
 {
   if (!first || !second)
     return first == second;
