@@ -26,9 +26,9 @@
 
 static const int cpoint_len[3][2] =
   {
-    { UTF8_CODEPOINT_2B, 2 },
+    { UTF8_CODEPOINT_4B, 4 },
     { UTF8_CODEPOINT_3B, 3 },
-    { UTF8_CODEPOINT_4B, 4 }
+    { UTF8_CODEPOINT_2B, 2 }
   };
 
 static size_t
