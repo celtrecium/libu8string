@@ -17,5 +17,5 @@ file(GLOB
 
 add_library(${PROJECT_NAME} SHARED ${SRCS})
 
-install(TARGETS ${PROJECT_NAME} DESTINATION /lib)
-install(FILES include/u8string.h DESTINATION /usr/include/)
+install(TARGETS ${PROJECT_NAME} DESTINATION lib64)
+install(FILES include/u8string.h DESTINATION include)
