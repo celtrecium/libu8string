@@ -56,7 +56,7 @@ u8str_get_cstrlen (const u8string_t *string)
 }
 
 static void
-u8str_copy_cstring_to_u8string (u8string_t *str, const cstr cstring)
+u8str_copy_cstring_to_u8string (u8string_t *str, const char *cstring)
 {
   size_t i = 0;
   size_t j = 0;
@@ -73,7 +73,7 @@ u8str_copy_cstring_to_u8string (u8string_t *str, const cstr cstring)
 }
 
 size_t
-u8str_strlen (const cstr string)
+u8str_strlen (const char *string)
 {
   size_t length = 0;
   size_t i = 0;
@@ -85,7 +85,7 @@ u8str_strlen (const cstr string)
 }
 
 u8string_t
-u8string (const cstr string)
+u8string (const char *string)
 {
   u8string_t ret; 
 
@@ -133,7 +133,7 @@ u8string_to_cstr (u8string_t *string)
 }
 
 u8string_t *
-u8string_set (u8string_t *string, const cstr newstr)
+u8string_set (u8string_t *string, const char *newstr)
 {
   size_t newsize = u8str_strlen (newstr);
 
@@ -183,4 +183,15 @@ u8char_compare (const void *first, const void *second)
     return first == second;
 
   return !strcmp (first, second);
+}
+
+char
+*u8string_next_char(char *src, u8char_t *buff)
+{
+  size_t offset = u8str_get_utf8char_len(src);
+
+  memset (buff, 0, U8CHAR_LEN);
+  memcpy (buff, src, offset);
+  
+  return src + offset;
 }
